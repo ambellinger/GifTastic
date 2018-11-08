@@ -143,7 +143,7 @@ function renderButtons() {
                                 ////reference the place in the object tree for the appropriate gif state's.url    
                                 var movingGif = results[i].images.original.url;
                                 var stillGif = results[i].images.original_still.url;
-                            }
+                                
                             // If else statement will animate the gif by switching states.
 
                             if (state === "still") {
@@ -157,18 +157,11 @@ function renderButtons() {
                                 //this will switch the data state from animate to still
                                 $(dogImage).attr("data-state", "still");
                             }
-
+                        }
                         })
-
                 });
-
             });
-
-
     });
-
-
-
 
 }
 
@@ -183,6 +176,17 @@ function renderButtons() {
 //Make sure you add a form to your html document.
 
 //Create an onclick function that interacts with the form button
+// $("#topics-input").on("click", function(event) {
+//     event.preventDefault();
+//     // This line grabs the input from the textbox
+//     var newDog = $("#topics-input").val();
+
+//     // Adding movie from the textbox to our array
+//     topics.push(newDog);
+
+//     // Calling renderButtons which handles the processing of our movie array
+//     renderButtons();
+//   });
 
 //add this   event.preventDefault(); (?? Not sure why)
 
