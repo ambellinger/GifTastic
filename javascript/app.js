@@ -6,16 +6,17 @@
 
 //Create an array with topics saved under var topics
 var topics = ["corgi",
-    "german sherpherd",
+    //"german sherpherd",
     "pomeranian",
-    "pug",
-    "bernese mountain dog",
-    "shih tzu",
-    "australian shepherd",
-    "border collie",
-    "pit bull",
-    "labrador retriever"]
+    "pug",]
+//"bernese mountain dog",
+//"shih tzu",
+//"australian shepherd",
+//"border collie",
+//"pit bull",
+//"labrador retriever"]
 
+var dogs;
 
 
 //*//Consult Activity Week 6:7 //*//
@@ -52,11 +53,18 @@ function renderButtons() {
 
     //Create an onclick function
     $(".dog").on("click", function () {
+        $("#dog-gifs-appear-here").empty();
         alert("you've clicked");
+
+        //try pushing the onclick thing into a variable here so that it searches only that
+        // exact topic
+
+        var dog = $(this).attr("data-name");
 
         //Create a var queryURL https://.... + topics + apikey… + limit 10. 
         //Topics is the variable. Consult the GIPHY website to see how the url should look.
-        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + topics +
+
+        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + dog +
             "&api_key=vfa87WI4IKhmgkTU4a7pwucCE1jM2kx6&limit=10";
         console.log(queryURL);
 
@@ -66,11 +74,14 @@ function renderButtons() {
             method: "GET"
         })
             .then(function (response) {
+
                 // Storing an array of results in the results variable
                 var results = response.data;
 
+
                 //Then, still within the onclick function, create a for loop that will grab the gifs. 
                 for (var i = 0; i < results.length; i++) {
+                    console.log(queryURL);
 
                     //In the for loop, dynamically create the div that the gif and rating will be in
                     var gifDiv = $("<div>");
@@ -107,31 +118,50 @@ function renderButtons() {
                     $("#dog-gifs-appear-here").prepend(gifDiv);
 
                 }
+
+                //GOAL// When the user clicks one of the still GIPHY images, the gif should animate. 
+                //If the user clicks the gif again, it should stop playing. 
+
                 //create another onclick function that selects everything with the .doggy class.
                 $(".doggy").on("click", function () {
-                    alert("yo");
+
                     $.ajax({
                         url: queryURL,
                         method: "GET"
                     })
+
                         .then(function (response) {
                             var results = response.data;
                             //Within that onclick function, create a variable called state. 
                             //var state = $(this).attr("data-state"); This will add the data state of the 
                             //gif to the variable so that it is easier to switch it. 
-                            var state = $(this).attr("data-state");
-                            // If the clicked image's state is still, update its src attribute to what its data-animate value is.
-                            // Then, set the image's data-state to animate
-                            // Else set src to the data-still value
-                            if (state === "still") {
-                                $(this).attr("src", results[i].images.original.url);
-                                $(this).attr("data-state", "animate");
-                            } else {
-                                $(this).attr("src", results[i].images.original_still.url);
-                                $(this).attr("data-state", "still");
+                            var state = $(dogImage).attr("data-state");
+
+                            //Create a for loop so that the index or i is referencing that right bject.
+                            for (var i = 0; i < results.length; i++) {
+                                //save the urls to variable to make it easier to reference it later 
+                                ////reference the place in the object tree for the appropriate gif state's.url    
+                                var movingGif = results[i].images.original.url;
+                                var stillGif = results[i].images.original_still.url;
                             }
+                            // If else statement will animate the gif by switching states.
+
+                            if (state === "still") {
+                                //this will swtitch the still url to the moving url 
+                                $(dogImage).attr("src", movingGif);
+                                //this will switch the data state from still to animate
+                                $(dogImage).attr("data-state", "animate");
+                            } else {
+                                //this will switch the moving url to the still
+                                $(dogImage).attr("src", stillGif);
+                                //this will switch the data state from animate to still
+                                $(dogImage).attr("data-state", "still");
+                            }
+
                         })
+
                 });
+
             });
 
 
@@ -141,20 +171,6 @@ function renderButtons() {
 
 
 }
-
-//*//Consult 6:13 lines 61-86 //*//
-
-
-//GOAL// When the user clicks one of the still GIPHY images, the gif should animate. 
-//If the user clicks the gif again, it should stop playing. 
-
-//*//Consult Activity Week 6:15//*//
-
-
-//Within that onclick function create an if or else statement similar to lines 21-26 in that activity. 
-//This will switch. However, since the links are not provided in the js or html documents 
-//but thru ajax, the code is different. Instead of $(this).attr("data-animate"), 
-//reference the place in the object tree for the appropriate gif state. 
 
 //*//Only once you get images displaying with button presses should you move on to the next step. //*//
 
