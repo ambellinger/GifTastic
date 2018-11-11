@@ -63,7 +63,7 @@ $(document).ready(function () {
             //Create a var queryURL https://.... + topics + apikey… + limit 10. 
             //Topics is the variable. Consult the GIPHY website to see how the url should look.
 
-            var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + dog +
+            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + dog +
                 "&api_key=vfa87WI4IKhmgkTU4a7pwucCE1jM2kx6&limit=10";
             console.log(queryURL);
 
