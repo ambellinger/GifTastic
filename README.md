@@ -5,6 +5,7 @@ Giftastic is an application that dynamically creates buttons from either an arra
 In addition, the gifs begin still and but then after clicking on them, they animate.
 
 ## Technologies Used
+* Bootstrap
 * Javascript
 * jQuery
 * GIPHY API
